@@ -5,7 +5,11 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
 
+import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -18,8 +22,18 @@ import javax.swing.border.LineBorder;
 
 class Previous extends JDialog {
 	public Previous() {
+		ClassLoader loader = getClass().getClassLoader();	
+		URL imageURL = loader.getResource("가자.jpg");
+		BufferedImage image = null;
+		try {
+			image = ImageIO.read(imageURL);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		
 		// 주요패널 선언
-		JPanel pnl = new JPanel() {};
+		MyImageBackgroundPanel pnl = new MyImageBackgroundPanel(image);
 		pnl.setBackground(Color.WHITE);
 		JPanel pnlNorth = new JPanel();
 		pnlNorth.setBackground(new Color(255, 0, 0, 0));
@@ -94,13 +108,13 @@ class Previous extends JDialog {
 		// pnlCenter에 들어갈 component
 		JLabel[] lblWinNum = new JLabel[7];
 		for (int i = 0; i < lblWinNum.length; i++) {
-			ImageIcon icon = getIcon("balls/ball1.png");
+			ImageIcon icon = getIcon("balls/ball1.png", 40, 40);
 			lblWinNum[i] = new JLabel(icon);
 		}			
 		JLabel lblPlus = new JLabel("+");
 		lblPlus.setFont(new Font("휴먼편지체", Font.BOLD, 25));
 		JLabel lblBonusNum = new JLabel();
-		lblBonusNum = new JLabel(getIcon("balls/ball1.png"));			
+		lblBonusNum = new JLabel(getIcon("balls/ball1.png", 40, 40));			
 		JLabel lblWinNumT = new JLabel("당첨번호");
 		lblWinNumT.setFont(new Font("휴먼편지체", Font.BOLD, 15));
 		JLabel lblBonusNumT = new JLabel("보너스");
@@ -170,16 +184,17 @@ class Previous extends JDialog {
 		add(pnl);
 		
 		setSize(700, 500);
+		setModal(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setVisible(true);
 	}
 	
-	public ImageIcon getIcon(String name) {
+	public ImageIcon getIcon(String name, int width, int height) {
 		String imageName = name;
 		Toolkit kit = Toolkit.getDefaultToolkit();
 		ClassLoader classLoader = getClass().getClassLoader();
 		Image image = kit.getImage(classLoader.getResource(imageName));
-		image = image.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+		image = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
 		ImageIcon icon = new ImageIcon(image);
 		return icon;
 	}
