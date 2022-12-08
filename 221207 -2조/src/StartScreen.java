@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -5,11 +6,11 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.Action;
+import javax.swing.Box;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -17,21 +18,23 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class StartScreen extends JFrame implements ActionListener {
-
-	private RoundedButton round1;
-	private RoundedButton round2;
-	private RoundedButton round3;
-
+public class StartScreen extends JFrame {
+	
 	public void ChangeImageSize() {
 		System.out.println("결과 확인 ");
-		ImageIcon icon = getIcon("나눔로또.png", 700, 500);
-		JLabel lbl = new JLabel(icon);
+		ImageIcon icon = new ImageIcon("128x128.png");
+
+		Image img = icon.getImage();
+		// 창의 사이즈인 700,500에 맞춰서 이미지를 변경
+		//Image changeImg = img.getScaledInstance(700,500, Image.SCALE_SMOOTH);
+		ImageIcon changeIcon = new ImageIcon(img);
+		JLabel lbl = new JLabel(changeIcon);
 
 		// SCALE_DEFAULT, SCALE_FAST, SCALE_SMOOTH, SCALE_REPLICATE,
 		// SCALE_AREA_AVERAGING
-
-		add(lbl);
+		JPanel pnl = new JPanel();
+		pnl.add(lbl);
+		add(pnl); //
 		setTitle("Lotto");
 		setSize(700, 500);
 		setVisible(true);
@@ -41,13 +44,10 @@ public class StartScreen extends JFrame implements ActionListener {
 	public StartScreen() {
 		ChangeImageSize();
 		JPanel under = new JPanel(new FlowLayout(FlowLayout.CENTER, 100, 40));
-		round1 = new RoundedButton("구매하기");
-		round2 = new RoundedButton("당첨확인");
-		round3 = new RoundedButton("이전회차");
-		round1.addActionListener(this);
-		round2.addActionListener(this);
-		round3.addActionListener(this);
-		
+		RoundedButton round1 = new RoundedButton("구매하기");
+		RoundedButton round2 = new RoundedButton("당첨확인");
+		RoundedButton round3 = new RoundedButton("이전회차");
+		under.setBackground(Color.red);
 		under.add(round1);
 		under.add(round2);
 		under.add(round3);
@@ -122,6 +122,7 @@ public class StartScreen extends JFrame implements ActionListener {
 		    graphics.setFont(getFont());
 		    graphics.drawString(getText(), textX, textY);
 		    graphics.dispose();
+		    
 
 		    super.paintComponent(g);
 		}
@@ -132,30 +133,5 @@ public class StartScreen extends JFrame implements ActionListener {
 		new StartScreen().showGUI();
 
 	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		Object command = e.getSource();
-		if (command == round1) {
-			new LottoPurchase(); 
-		}
-		if (command == round2) {
-			new resultScreenSet();
-		}
-		if (command == round3) {
-			new Previous();
-		}
-		
-	}
-	
-	  public ImageIcon getIcon(String name, int width, int height) {
-	      String imageName = name;
-	      Toolkit kit = Toolkit.getDefaultToolkit();
-	      ClassLoader classLoader = getClass().getClassLoader();
-	      Image image = kit.getImage(classLoader.getResource(imageName));
-	      image = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-	      ImageIcon icon = new ImageIcon(image);
-	      return icon;
-	   }
 
 }
