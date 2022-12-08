@@ -127,8 +127,8 @@ class resultScreenSet extends JDialog{
 		pnlBox.add(pnl5);
 		
 		add(pnlBox);
-		setSize(700,500);
 		setModal(true);
+		setSize(700,500);
 		setVisible(true);
 	}
 	

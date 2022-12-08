@@ -18,8 +18,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class StartScreen extends JFrame {
+public class StartScreen extends JFrame implements ActionListener {
 	
+	private RoundedButton round1;
+	private RoundedButton round2;
+	private RoundedButton round3;
+
 	public void ChangeImageSize() {
 		System.out.println("결과 확인 ");
 		ImageIcon icon = new ImageIcon("128x128.png");
@@ -31,7 +35,7 @@ public class StartScreen extends JFrame {
 		JLabel lbl = new JLabel(changeIcon);
 
 		// SCALE_DEFAULT, SCALE_FAST, SCALE_SMOOTH, SCALE_REPLICATE,
-		// SCALE_AREA_AVERAGING
+		// SCALE_AREA_AVERAGING\
 		JPanel pnl = new JPanel();
 		pnl.add(lbl);
 		add(pnl); //
@@ -44,9 +48,12 @@ public class StartScreen extends JFrame {
 	public StartScreen() {
 		ChangeImageSize();
 		JPanel under = new JPanel(new FlowLayout(FlowLayout.CENTER, 100, 40));
-		RoundedButton round1 = new RoundedButton("구매하기");
-		RoundedButton round2 = new RoundedButton("당첨확인");
-		RoundedButton round3 = new RoundedButton("이전회차");
+		round1 = new RoundedButton("구매하기");
+		round2 = new RoundedButton("당첨확인");
+		round3 = new RoundedButton("이전회차");
+		round1.addActionListener(this);
+		round2.addActionListener(this);
+		round3.addActionListener(this);
 		under.setBackground(Color.red);
 		under.add(round1);
 		under.add(round2);
@@ -132,6 +139,21 @@ public class StartScreen extends JFrame {
 		System.out.println("프로그램 실행");
 		new StartScreen().showGUI();
 
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object command = e.getSource();
+		
+		if (command == round1) {
+			new Purchase();
+		}
+		if (command == round2) {
+			new resultScreenSet();
+		}
+		if (command == round3) {
+			new Previous();
+		}
 	}
 
 }
