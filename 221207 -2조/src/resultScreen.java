@@ -13,6 +13,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 class resultScreenSet extends JDialog{
@@ -33,36 +34,40 @@ class resultScreenSet extends JDialog{
 		pnl1.add(turn);
 		pnl1.add(title);
 		
-		pnl2.setLayout(new FlowLayout());
-		JLabel num1 = new JLabel();
-		JLabel num2 = new JLabel();
-		JLabel num3 = new JLabel();
-		JLabel num4 = new JLabel();
-		JLabel num5 = new JLabel();
-		JLabel num6 = new JLabel();
+		pnl2.setLayout(new BoxLayout(pnl2, BoxLayout.Y_AXIS));
+		JPanel pnl2_1 = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+		JPanel pnl2_2 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JLabel lblWinNumT = new JLabel("당첨번호");
+		lblWinNumT.setFont(new Font("휴먼편지체", Font.BOLD, 12));
+		JLabel lblBonusNumT = new JLabel("보너스");
+		lblBonusNumT.setFont(new Font("휴먼편지체", Font.BOLD, 12));
+		pnl2_2.add(Box.createHorizontalStrut(280));
+		pnl2_2.add(lblWinNumT);
+		pnl2_2.add(Box.createHorizontalStrut(140));
+		pnl2_2.add(lblBonusNumT);
+		JLabel[] lblWinNum = new JLabel[7];
+		for (int i = 0; i < lblWinNum.length; i++) {
+			ImageIcon icon = getIcon("balls/ball1.png");
+			lblWinNum[i] = new JLabel(icon);
+		}
 		JLabel plus = new JLabel("+");
 		plus.setFont(new Font("바탕", Font.BOLD, 20));
 		JLabel bonus = new JLabel();
-		num1.setIcon(getIcon("balls/ball1.png"));
-		num2.setIcon(getIcon("balls/ball2.png"));
-		num3.setIcon(getIcon("balls/ball3.png"));
-		num4.setIcon(getIcon("balls/ball4.png"));
-		num5.setIcon(getIcon("balls/ball5.png"));
-		num6.setIcon(getIcon("balls/ball6.png"));
 		bonus.setIcon(getIcon("balls/ball7.png"));
-		pnl2.add(num1);
-		pnl2.add(num2);
-		pnl2.add(num3);
-		pnl2.add(num4);
-		pnl2.add(num5);
-		pnl2.add(num6);
-		pnl2.add(Box.createHorizontalGlue());
-		pnl2.add(plus);
-		pnl2.add(Box.createHorizontalGlue());
-		pnl2.add(bonus);
+		for (int i = 0; i < lblWinNum.length - 1; i++) {
+			pnl2_1.add(lblWinNum[i]);			
+		}
+		pnl2_1.add(plus);
+		pnl2_1.add(bonus);
+		pnl2_1.setPreferredSize(new Dimension(0, 40));
+		pnl2_2.setPreferredSize(new Dimension(0, 10));
+		pnl2.add(pnl2_1);
+		pnl2.add(pnl2_2);
+		//panel 크기 확인용
+		//pnl2_1.setBorder(new LineBorder(Color.BLACK, 2, true));
 		
 		JPanel pnl3_1 = new JPanel();
-		pnl3_1.setPreferredSize(new Dimension(450, 80));
+		pnl3_1.setPreferredSize(new Dimension(450, 60));
 		pnl3_1.setBackground(Color.LIGHT_GRAY);
 		JLabel resultWord = new JLabel("축하합니다! 총 ");
 		JLabel resultWord2 = new JLabel("원 당첨입니다!");
@@ -73,14 +78,12 @@ class resultScreenSet extends JDialog{
 		resultWord.setForeground(Color.white);
 		resultWord2.setForeground(Color.white);
 		resultMoney.setForeground(Color.white);
-		pnl3_1.add(Box.createVerticalStrut(70));
+		pnl3_1.add(Box.createVerticalStrut(50));
 		pnl3_1.add(resultWord);
 		pnl3_1.add(resultMoney);		
 		pnl3_1.add(resultWord2);
 		pnl3.add(Box.createHorizontalStrut(5));
 		pnl3.add(pnl3_1);
-		
-		
 		
 		JButton before = new JButton("<<<");
 		JButton after = new JButton(">>>");		
@@ -124,9 +127,8 @@ class resultScreenSet extends JDialog{
 		pnlBox.add(pnl5);
 		
 		add(pnlBox);
-		setSize(700,500);
 		setModal(true);
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		setSize(700,500);
 		setVisible(true);
 	}
 	
