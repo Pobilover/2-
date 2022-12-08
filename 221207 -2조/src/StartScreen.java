@@ -18,7 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class StartScreen extends JFrame implements ActionListener {
-	
+
 	private RoundedButton round1;
 	private RoundedButton round2;
 	private RoundedButton round3;

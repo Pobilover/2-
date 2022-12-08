@@ -21,19 +21,9 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
 class Previous extends JDialog {
-	public Previous() {
-		ClassLoader loader = getClass().getClassLoader();	
-		URL imageURL = loader.getResource("가자.jpg");
-		BufferedImage image = null;
-		try {
-			image = ImageIO.read(imageURL);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
-		
+	public Previous() {	
 		// 주요패널 선언
-		MyImageBackgroundPanel pnl = new MyImageBackgroundPanel(image);
+		MyImageBackgroundPanel pnl = new MyImageBackgroundPanel(backgroud("배경.png"));
 		pnl.setBackground(Color.WHITE);
 		JPanel pnlNorth = new JPanel();
 		pnlNorth.setBackground(new Color(255, 0, 0, 0));
@@ -184,6 +174,7 @@ class Previous extends JDialog {
 		add(pnl);
 		
 		setSize(700, 500);
+		setTitle("이전회차 조회");
 		setModal(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setVisible(true);
@@ -197,5 +188,17 @@ class Previous extends JDialog {
 		image = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
 		ImageIcon icon = new ImageIcon(image);
 		return icon;
+	}
+	
+	public BufferedImage backgroud(String name) {
+		ClassLoader loader = getClass().getClassLoader();	
+		URL imageURL = loader.getResource(name);
+		BufferedImage image = null;
+		try {
+			image = ImageIO.read(imageURL);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return image;
 	}
 }
